@@ -7,6 +7,7 @@ thanks diophore.
 
 special thanks [西脇.rb & 東灘.rb](https://github.com/nishiwaki-higashinadarb)
 
+attendees https://github.com/kyotorb/code_quizzes/network/members
 
 Feature: codebreaker submits guess
 
