@@ -18,13 +18,13 @@ class Codebreaker
         sec == gue
       }
       plus_count = pluses.size
-
       other_secret_hash = Hash.new {|h,k| h[k] = 0}
       other_guesses = []
       others.each {|sec, gue|
         other_secret_hash[sec] += 1
         other_guesses << gue
       }
+
       minus_count = 0
       other_guesses.each {|gue|
         if other_secret_hash[gue] > 0
@@ -40,7 +40,11 @@ end
 
 case $0
 when __FILE__
-  main
+  game = Codebreaker::Game.new(STDOUT)
+  game.start('1234')
+  while(code=gets.chomp)
+    puts game.guess(code)
+  end
 when /spec[^\/]*$/
   # {spec of the implementation}
 end
