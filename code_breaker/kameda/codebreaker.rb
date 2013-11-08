@@ -34,11 +34,11 @@ module Codebreaker
     end
 
     def total_hit_count(secret_ary, guess_ary)
-      secret_hash = secret_ary.group_by {|char| char} # {要素 => 要素数} というハッシュを作りたい
-      guess_hash = guess_ary.group_by {|char| char}
+      secret_hash = secret_ary.group_by {|char| char} # {要素 => 要素数} というハッシュを作りたいが、次善策
+      guess_hash  = guess_ary .group_by {|char| char}
       secret_hash.map {|key, chars|
         secret_count = chars.size
-        guess_count = guess_hash[key].try(:size).to_i
+        guess_count  = guess_hash[key].try(:size).to_i
         [secret_count, guess_count].min
       }.sum
     end
