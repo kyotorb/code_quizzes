@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 
-class Codebreaker
+module Codebreaker
   class Game
     def initialize(output)
       @output = output
