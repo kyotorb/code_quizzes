@@ -54,3 +54,11 @@ Feature: codebreaker submits guess
       | 3111 | 1311  | ++-- |
       | 3114 | 1251  | --   |
       | 1511 | 2134  | -    |
+
+  Scenario: try and error
+    Given the secret code is "1234"
+    When I guess "4321"
+    Then the mark should be "----"
+    When I guess "1234"
+    Then the mark should be "++++"
+

@@ -12,7 +12,6 @@ module Codebreaker
 
 		def guess(numbers)
 			@numbers = numbers.each_char.to_a
-			@hit_count = nil
 
 			'+' * hit_count + '-' * match_count
 		end
@@ -25,7 +24,7 @@ module Codebreaker
 		end
 
 		def hit_count
-			@hit_count ||= @secret.each_index.reduce(0) do |count, idx|
+			@secret.each_index.reduce(0) do |count, idx|
 				count + (@secret[idx] == @numbers[idx] ? 1 : 0)
 			end
 		end
