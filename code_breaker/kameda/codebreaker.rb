@@ -14,25 +14,31 @@ module Codebreaker
     def guess(guess)
       secret_ary = @secret.split(//)
       guess_ary = guess.split(//)
-      matches, others = secret_ary.zip(guess_ary).partition {|sec, gue|
-        sec == gue
-      }
-      match_count = matches.size
-      other_secret_hash = Hash.new {|h,k| h[k] = 0}
-      other_guesses = []
-      others.each {|sec, gue|
-        other_secret_hash[sec] += 1
-        other_guesses << gue
-      }
 
-      hit_count = 0
-      other_guesses.each {|gue|
-        if other_secret_hash[gue] > 0
-          hit_count += 1
-          other_secret_hash[gue] -= 1
+      match_count = self.match_count(secret_ary, guess_ary)
+      total_hit_count = self.total_hit_count(secret_ary, guess_ary)
+      real_hit_count = total_hit_count - match_count
+
+      ('+' * match_count) + ('-' * real_hit_count)
+    end
+
+    def total_hit_count(secret_ary, guess_ary_org)
+      guess_ary = guess_ary_org.dup
+      secret_ary.select {|char|
+        i = guess_ary.index(char)
+        if i
+          guess_ary.delete_at(i)
+          true
+        else
+          false
         end
-      }
-      ('+' * match_count) + ('-' * hit_count)
+      }.size
+    end
+
+    def match_count(secret_ary, guess_ary)
+      secret_ary.zip(guess_ary).select {|sec, gue|
+        sec == gue
+      }.size
     end
 
   end
