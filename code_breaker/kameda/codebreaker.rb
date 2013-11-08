@@ -1,6 +1,18 @@
 # -*- encoding: utf-8 -*-
 
 
+module Enumerable
+  def sum
+    self.inject(0) {|memo,i| memo + i}
+  end
+end
+
+class Object
+  def try(message)
+    self.nil? ? nil : self.send(message)
+  end
+end
+
 module Codebreaker
   class Game
     def initialize(output)
@@ -16,23 +28,19 @@ module Codebreaker
       guess_ary = guess.split(//)
 
       match_count = self.match_count(secret_ary, guess_ary)
-      total_hit_count = self.total_hit_count(secret_ary, guess_ary)
-      real_hit_count = total_hit_count - match_count
+      real_hit_count = self.total_hit_count(secret_ary, guess_ary) - match_count
 
       ('+' * match_count) + ('-' * real_hit_count)
     end
 
-    def total_hit_count(secret_ary, guess_ary_org)
-      guess_ary = guess_ary_org.dup
-      secret_ary.select {|char|
-        i = guess_ary.index(char)
-        if i
-          guess_ary.delete_at(i)
-          true
-        else
-          false
-        end
-      }.size
+    def total_hit_count(secret_ary, guess_ary)
+      secret_hash = secret_ary.group_by {|char| char} # {要素 => 要素数} というハッシュを作りたい
+      guess_hash = guess_ary.group_by {|char| char}
+      secret_hash.map {|key, chars|
+        secret_count = chars.size
+        guess_count = guess_hash[key].try(:size).to_i
+        [secret_count, guess_count].min
+      }.sum
     end
 
     def match_count(secret_ary, guess_ary)
