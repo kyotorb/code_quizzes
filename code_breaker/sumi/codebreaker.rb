@@ -1,3 +1,11 @@
+class String
+	def fill(char, range)
+		self.each_char.to_a.tap {|target|
+				target.fill(char, range)
+		}.join
+	end
+end
+
 module Codebreaker
 	class Game
 		def initialize(output)
@@ -13,7 +21,7 @@ module Codebreaker
 		def guess(numbers)
 			@numbers = numbers.each_char.to_a
 
-			'+' * hit_count + '-' * match_count
+			('+' * total_count).fill('-', hit_count..-1)
 		end
 
 	private
@@ -27,10 +35,6 @@ module Codebreaker
 			@secret.each_index.reduce(0) do |count, idx|
 				count + (@secret[idx] == @numbers[idx] ? 1 : 0)
 			end
-		end
-
-		def match_count
-			total_count - hit_count
 		end
 	end
 end
