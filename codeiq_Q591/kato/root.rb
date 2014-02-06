@@ -1,30 +1,18 @@
-require 'bigdecimal'
+result = nil
+result_full = nil
+n = 2
+loop do
+  i, f = Math.sqrt(n).to_s.split('.')
+  result ||= n if f.chars[0..9].uniq.size == 10
+  result_full ||= n if (i+f).chars[0..9].uniq.size == 10
 
-results = {}
-results_all = {}
-(0..9).each do |num|
-  sqrt = BigDecimal.new(num.to_s).sqrt(50)
-  i, f = sqrt.to_s('F').split('.')
-puts "num=#{num}, sqrt=#{i}.#{f}"
-  nums = {}
-  f.chars.each_with_index do |e, idx|
-    nums[e] = 1
-    if nums.size == 10
-      results[num] = idx+1
-      break
-    end
-  end
-  nums = {}
-  (i+f).chars.each_with_index do |e, idx|
-    nums[e] = 1
-    if nums.size == 10
-      results_all[num] = idx+1
-      break
-    end
-  end
+  break if result && result_full
+  n += 1
 end
+puts "only decimal place : #{result} / sqrt=#{Math.sqrt(result).to_s}"
+puts "full number chars  : #{result_full} / sqrt=#{Math.sqrt(result_full).to_s}"
 
-puts
-p results
-p results_all
+
+#=> only decimal place : 143 / sqrt=11.958260743101398
+#=> full number chars  : 1362 / sqrt=36.90528417449187
 
