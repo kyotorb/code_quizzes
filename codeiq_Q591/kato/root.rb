@@ -1,5 +1,5 @@
-result = result_full = nil
-10000.times do      #loop do  .... 無限ループになるので 10000.times に
+result = result_full = n = nil
+loop do
   n = (n || 1) + 1
   i, f = Math.sqrt(n).to_s.split('.')
   result ||= n if f.chars[0..9].uniq.size == 10
