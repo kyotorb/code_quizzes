@@ -1,13 +1,10 @@
-result = nil
-result_full = nil
-n = 2
-loop do
+result = result_full = nil
+10000.times do      #loop do  .... 無限ループになるので 10000.times に
+  n = (n || 1) + 1
   i, f = Math.sqrt(n).to_s.split('.')
   result ||= n if f.chars[0..9].uniq.size == 10
   result_full ||= n if (i+f).chars[0..9].uniq.size == 10
-
   break if result && result_full
-  n += 1
 end
 puts "only decimal place : #{result} / sqrt=#{Math.sqrt(result).to_s}"
 puts "full number chars  : #{result_full} / sqrt=#{Math.sqrt(result_full).to_s}"
