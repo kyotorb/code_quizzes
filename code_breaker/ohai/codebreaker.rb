@@ -17,7 +17,7 @@ module Codebreaker
     end
 
     def hit_count(numbers)
-      numbers.each_char.zip(@secret).count{|n, s| s == n }
+      numbers.each_char.zip(@secret).count{|char, secret_char| char == secret_char }
     end
 
     def match_count(numbers)
